@@ -40,7 +40,9 @@ public abstract class DigestUtils {
 
     private static final String MD5_ALGORITHM_NAME = "MD5";
 
-    private static final String SHA_ALGORITHM_NAME = "sha";
+    private static final String SHA_ALGORITHM_NAME = "SHA";
+
+    private static final String SHA256_ALGORITHM_NAME = "SHA-256";
 
     private static final char[] HEX_CHARS =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -62,11 +64,31 @@ public abstract class DigestUtils {
     }
 
     public static String shaDigestAsHex(String value) {
-        return digestAsHexString(SHA_ALGORITHM_NAME, value.getBytes(StandardCharsets.UTF_8));
+        return digestAsHexString(SHA_ALGORITHM_NAME, value);
     }
 
     public static String shaDigestAsHex(InputStream inputStream) throws IOException {
         return digestAsHexString(SHA_ALGORITHM_NAME, inputStream);
+    }
+
+    public static byte[] sha256Digest(byte[] bytes) {
+        return digest(SHA256_ALGORITHM_NAME, bytes);
+    }
+
+    public static byte[] sha256Digest(InputStream inputStream) throws IOException {
+        return digest(SHA256_ALGORITHM_NAME, inputStream);
+    }
+
+    public static String sha256DigestAsHex(byte[] bytes) {
+        return digestAsHexString(SHA256_ALGORITHM_NAME, bytes);
+    }
+
+    public static String sha256DigestAsHex(String value) {
+        return digestAsHexString(SHA256_ALGORITHM_NAME, value);
+    }
+
+    public static String sha256DigestAsHex(InputStream inputStream) throws IOException {
+        return digestAsHexString(SHA256_ALGORITHM_NAME, inputStream);
     }
 
     /**
@@ -101,7 +123,7 @@ public abstract class DigestUtils {
     }
 
     public static String md5DigestAsHex(String value) {
-        return digestAsHexString(MD5_ALGORITHM_NAME, value.getBytes(StandardCharsets.UTF_8));
+        return digestAsHexString(MD5_ALGORITHM_NAME, value);
     }
 
     /**
@@ -153,11 +175,11 @@ public abstract class DigestUtils {
         }
     }
 
-    private static byte[] digest(String algorithm, byte[] bytes) {
+    public static byte[] digest(String algorithm, byte[] bytes) {
         return getDigest(algorithm).digest(bytes);
     }
 
-    private static byte[] digest(String algorithm, InputStream inputStream) throws IOException {
+    public static byte[] digest(String algorithm, InputStream inputStream) throws IOException {
         MessageDigest messageDigest = getDigest(algorithm);
         // if (inputStream instanceof UpdateMessageDigestInputStream) {
         //     ((UpdateMessageDigestInputStream) inputStream).updateMessageDigest(messageDigest);
@@ -171,12 +193,16 @@ public abstract class DigestUtils {
         return messageDigest.digest();
     }
 
-    private static String digestAsHexString(String algorithm, byte[] bytes) {
+    public static String digestAsHexString(String algorithm, byte[] bytes) {
         char[] hexDigest = digestAsHexChars(algorithm, bytes);
         return new String(hexDigest);
     }
 
-    private static String digestAsHexString(String algorithm, InputStream inputStream) throws IOException {
+    public static String digestAsHexString(String algorithm, String value) {
+        return digestAsHexString(algorithm, value.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String digestAsHexString(String algorithm, InputStream inputStream) throws IOException {
         char[] hexDigest = digestAsHexChars(algorithm, inputStream);
         return new String(hexDigest);
     }

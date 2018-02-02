@@ -19,7 +19,7 @@ repositories {
 
 group = "io.github.wyp0596"
 archivesBaseName = "commons-j"
-version = "0.0.1"
+version = "0.0.2"
 
 dependencies {
     compile ('org.slf4j:slf4j-api:1.7.25')
@@ -27,6 +27,8 @@ dependencies {
     compile ('com.google.code.gson:gson:2.8.2')
     compile ('com.squareup.okhttp3:okhttp:3.9.1')
     compile ('joda-time:joda-time:2.9.9')
+
+    testCompile ('junit:junit:4.12')
 }
 
 task javadocJar(type: Jar) {
