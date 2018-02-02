@@ -51,7 +51,9 @@ public abstract class GsonUtils {
     /**
      * 反序列化JSON字符串为特定类型的对象
      * <pre>
+     * {@code
      * Type typeOfT = new TypeToken<List<String>>(){}.getType();
+     * }
      * </pre>
      *
      * @param <T>     目标对象类型

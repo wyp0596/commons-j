@@ -8,6 +8,8 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 repositories {
     mavenLocal()
@@ -15,6 +17,9 @@ repositories {
     maven { url "http://repo2.mycompany.com/maven2" }
 }
 
+group = "io.github.wyp0596"
+archivesBaseName = "commons-j"
+version = "0.0.1"
 
 dependencies {
     compile ('org.slf4j:slf4j-api:1.7.25')
@@ -22,4 +27,67 @@ dependencies {
     compile ('com.google.code.gson:gson:2.8.2')
     compile ('com.squareup.okhttp3:okhttp:3.9.1')
     compile ('joda-time:joda-time:2.9.9')
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Commons lib for Java'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Commons lib for Java'
+                url 'https://github.com/wyp0596/commons-j/'
+
+                scm {
+                    connection 'scm:git:https://github.com/wyp0596/commons-j/'
+                    developerConnection 'scm:git:https://github.com/wyp0596/commons-j/'
+                    url 'https://github.com/wyp0596/commons-j/'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'wyp0596'
+                        name 'wangyupeng'
+                        email 'wyp0596@qq.com'
+                    }
+                }
+            }
+        }
+    }
 }
