@@ -186,6 +186,10 @@ public abstract class GsonUtils {
         return gson.fromJson(json, TYPE_OF_STRING_SET);
     }
 
+    public static <T> T convert(Object from, Class<T> target) {
+        return fromJson(toJson(from), target);
+    }
+
     /**
      * 获取对应版本的Gson对象(若不存在返回默认对象)
      *

@@ -18,7 +18,7 @@ public abstract class HttpUtils {
     private static final MediaType FORM
             = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
-    private static final OkHttpClient client = new OkHttpClient.Builder()
+    private static OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(2, TimeUnit.SECONDS)
             .readTimeout(2, TimeUnit.SECONDS)
             .writeTimeout(2, TimeUnit.SECONDS)
@@ -26,6 +26,10 @@ public abstract class HttpUtils {
 
     private HttpUtils() {
         throw new UnsupportedOperationException();
+    }
+
+    public static void setClient(OkHttpClient client) {
+        HttpUtils.client = client;
     }
 
     public static Response getForResponse(String url) throws UncheckedIOException {
