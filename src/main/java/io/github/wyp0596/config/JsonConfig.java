@@ -40,7 +40,7 @@ import java.util.Map;
  * }
  * </pre>
  * <p>
- * priority is system property -> system env -> external config -> resource config
+ * {@code priority is system property  =>  system env => external config => resource config }
  * Created by wyp0596 on 05/02/2018.
  */
 public abstract class JsonConfig {
@@ -53,10 +53,11 @@ public abstract class JsonConfig {
     }
 
     /**
+     * {@code priority is system property  =>  system env => external config => resource config }
      * 1. read file config to json object
-     * 2. extract active config name (system property > system env > external config > resource config)
-     * 3. put resource config (active config > default)
-     * 4. put external config (active config > default)
+     * 2. extract active config name
+     * 3. put resource config
+     * 4. put external config
      * 5. put system env
      * 6. put system property
      */
