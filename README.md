@@ -11,7 +11,7 @@ Apache Maven
 <dependency>
     <groupId>io.github.wyp0596</groupId>
     <artifactId>commons-j</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.1</version>
 </dependency>
 
 ```
@@ -19,5 +19,5 @@ Apache Maven
 Gradle/Grails
 
 ```
-compile 'io.github.wyp0596:commons-j:0.0.1'
+compile 'io.github.wyp0596:commons-j:0.1.1'
 ```

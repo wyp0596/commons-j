@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class HttpUtils {
 
+
     private static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
@@ -48,6 +49,20 @@ public abstract class HttpUtils {
         ResponseBody body = getForResponse(url).body();
         try {
             return body == null ? null : body.string();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    public static Response postForResponse(String url, Map<String, String> headersMap, Object req) throws UncheckedIOException {
+        String json = req instanceof String ? (String) req : GsonUtils.toJson(req);
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(Headers.of(headersMap))
+                .post(RequestBody.create(JSON, json))
+                .build();
+        try {
+            return client.newCall(request).execute();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

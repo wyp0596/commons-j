@@ -186,6 +186,24 @@ public abstract class GsonUtils {
         return gson.fromJson(json, TYPE_OF_STRING_SET);
     }
 
+    /**
+     * 转化对象为Json元素
+     *
+     * @param src 对象
+     * @return Json元素
+     */
+    public static JsonElement toJsonTree(Object src) {
+        return gson.toJsonTree(src);
+    }
+
+    /**
+     * 对象转化, 先序列化为Json, 然后再反序列化为目标实例
+     *
+     * @param from   源实例
+     * @param target 目标实例类
+     * @param <T>    类型
+     * @return 目标实例
+     */
     public static <T> T convert(Object from, Class<T> target) {
         return fromJson(toJson(from), target);
     }
